@@ -1,0 +1,56 @@
+<html>
+  <head></head>
+  <body>
+    <div id="game"></div>
+    <script type="text/javascript" src="lib/crafty.js"></script>
+    <script>
+    // Height and Width
+		var WIDTH = 500, HEIGHT = 320;
+		// Initialize Crafty
+		Crafty.init(WIDTH, HEIGHT);
+		// Background
+		Crafty.background("black");
+
+
+//lets loads some assets for the game
+		     // This will create entities called floor, wall1 and stairs
+	  Crafty.sprite(32,"assets/dungeon.png", {
+	     floor: [0,0],
+	     wall1: [2,1],
+	     stairs: [3,1]
+	  });
+
+	  // This will create entities called hero1 and blob1
+	  Crafty.sprite(32,"assets/characters.png", {
+	     hero: [11,4],
+	     goblin1: [8,14]
+	  });
+
+	  Crafty.scene("loading", function() {
+	    Crafty.load(["assets/dungeon.png","assets/characters.png"], function() {
+	         Crafty.scene("main"); // Run the main scene
+	         console.log("Done loading");
+	     },
+	     function(e) { //progress
+	     },
+	     function(e) { //somethig is wrong, error loading
+	     	console.log("Error,failed to load", e)
+
+	    });
+	  });
+
+	  Crafty.scene("loading");
+	  // Let's draw us a Hero and a Blob
+	  Crafty.scene("main",function() {
+	    Crafty.background("#FFF");
+	    var player = Crafty.e("2D, Canvas, hero")
+	         .attr({x:0, y:0});
+
+	    var goblin = Crafty.e("2D, Canvas, goblin1")
+	         .attr({x:50, y:50});
+	  });
+
+   </script>
+  </body>
+
+</html>

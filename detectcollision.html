@@ -1,0 +1,90 @@
+<html>
+  <head></head>
+  <body>
+    <div id="game"></div>
+    <script type="text/javascript" src="lib/crafty.js"></script>
+    <script>
+    // Height and Width
+		var WIDTH = 500, HEIGHT = 320;
+
+		// Initialize Crafty
+		Crafty.init(WIDTH, HEIGHT);
+		// Background
+
+
+
+//lets loads some assets for the game
+		     // This will create entities called floor, wall1 and stairs
+	  Crafty.sprite(32,"assets/dungeon.png", {
+	     floor: [0,0],
+	     wall1: [2,1],
+	     stairs: [3,1]
+	  });
+
+	  // This will create entities called hero1 and blob1
+	  Crafty.sprite(32,"assets/characters.png", {
+	     hero: [11,4],
+	     goblin1: [8,14]
+	  });
+
+	  Crafty.scene("loading", function() {
+	    Crafty.load(["assets/dungeon.png","assets/characters.png"], function() {
+	         Crafty.scene("main"); // Run the main scene
+	         console.log("Done loading");
+	     },
+	     function(e) { //progress
+	     },
+	     function(e) { //somethig is wrong, error loading
+	     	console.log("Error,failed to load", e)
+
+	    });
+	  });
+
+	  Crafty.scene("loading");
+	  // Let's draw us a Hero and a mean Goblin
+	  Crafty.scene("main",function() {
+	    Crafty.background("#FFF");
+	    var player = Crafty.e("2D, Canvas, hero")
+	         .attr({x:0, y:0})
+	         
+
+	    var goblin = Crafty.e("2D, Canvas, goblin1")
+	         .attr({x:50, y:50});
+
+	    //lets now make the hero move where ever we touch      
+	    Crafty.addEvent(this, Crafty.stage.elem, 'mousedown', function(e) {
+		player.x =  e.clientX;
+		player.y =  e.clientY;
+		  	console.log('mousedown at (' + e.clientX + ', ' + e.clientY + ')');
+		});  
+
+
+	      /* Detect if the sprites collide and keep them from occupying the same space */
+	      
+		  player.addComponent("Collision").bind('Moved', function(from) {
+		    if(this.hit('2D')) {
+		       this.attr({x: from.x, y:from.y});
+		    }
+		  });
+		  goblin.addComponent("Collision").bind('Moved', function(from) {
+		    if(this.hit('2D')) {
+		       this.attr({x: from.x, y:from.y});
+		    }
+		  });
+
+	  });
+
+	
+
+/*	Crafty.addEvent(this, Crafty.stage.elem, 'mousemove', function(e) {
+	  var relative = Crafty.DOM.translate(e.clientX, e.clientY);
+	  console.log('mousemove at (' + relative.x + ', ' + relative.y + ')');
+	  this.player.x = relative.x;
+	  this.player.y = relative.y;
+	}.bind(this));
+*/
+
+   </script>
+  </body>
+
+</html>

@@ -1,0 +1,47 @@
+<html>
+  <head></head>
+  <body>
+    <div id="game"></div>
+    <script type="text/javascript" src="lib/crafty.js"></script>
+    <script>
+      // When the DOM has loaded
+		
+		// Height and Width
+		var WIDTH = 500, HEIGHT = 320;
+		// Initialize Crafty
+		Crafty.init(WIDTH, HEIGHT);
+		// Background
+		Crafty.background("black");
+
+		Crafty.e("mouseTracking, 2D, Mouse, Touch, Canvas")
+          .attr({ w:500, h:320, x:0, y:0 })
+          .bind("MouseMove", function(e) 
+          {
+                console.log("MouseDown:"+ Crafty.mousePos.x +", "+ Crafty.mousePos.y);
+                // when you touch on the canvas redraw the player
+                player.x = Crafty.mousePos.x;
+                player.y = Crafty.mousePos.y;
+
+            });  
+
+		// Create a player entity
+		var player = Crafty.e();
+		// Add some components to the entity
+		player.addComponent("2D, DOM");
+		//set where your player starts
+		player.attr({
+		 x : 10,
+		 y : 10,
+		 w : 50,
+		 h : 50
+		 });
+
+		player.addComponent("Color").color("red");
+		//add mouse component for mouse events
+		
+        
+		
+
+    </script>
+  </body>
+</html>

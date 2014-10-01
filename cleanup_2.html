@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="game"></div>
+    <script type="text/javascript" src="lib/crafty.js"></script>
+    <script type="text/javascript" src="lib/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="src/com/loading.js"></script>
+    <script type="text/javascript" src="src/com/sprites.js"></script>
+    <script type="text/javascript" src="src/com/Slide.js"></script>
+    <script type="text/javascript" src="src/com/PlayerControls.js"></script>
+    <script>
+
+	// Initialize Crafty
+	Crafty.init(500, 320);
+	// Background
+    Crafty.background('green');
+
+	Crafty.c("AI",{
+	  _directions:  [[0,-1], [0,1], [1,0], [-1,0]],
+	  init: function() {
+	    this._moveChance = 0.5;
+	    this.requires('Slide');
+
+	    this.bind("Turn",function() {
+	      if(Math.random() < this._moveChance) {
+	        this.trigger("Slide", this._randomDirection());
+	      }
+	    });
+	  },
+	  moveChance: function(val) {
+	    this._moveChance = val;
+	  },
+	  _randomDirection: function() {
+	    return this._directions[Math.floor(Math.random()*4)];
+	  }
+	});
+
+
+	  Crafty.scene("main",function() {
+
+	    Crafty.background("#FFF");
+	    player = Crafty.e("2D, Canvas,PlayerControls, hero")
+	         .attr({x:0, y:0})
+
+	    $.get("assets/dungeon1.tsv",function(data) {
+         alert(data);     
+	    alert( "Load was performed." );
+	    });
+
+	    // goblin = Crafty.e("2D, Canvas, goblin1")
+	    //      .attr({x:50, y:50});
+
+	    slowGoblin = Crafty.e("2D, Canvas, goblin1, AI").attr({x:32, y:32}).moveChance(0.2);
+    	fastGoblin = Crafty.e("2D, Canvas, goblin1, AI").attr({x:96, y:32}).moveChance(0.8);   
+	  });
+
+	  Crafty.scene("loading");
+
+
+   </script>
+  </body>
+
+</html>
