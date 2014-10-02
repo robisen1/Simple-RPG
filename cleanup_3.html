@@ -18,6 +18,9 @@
 	// Background
     Crafty.background('green');
 
+    lastclientX = 0;
+    lastclientY = 0;
+
     function loadMap(file, callback) {
   	$.get(file,function(data) {
     	var level = [];
@@ -45,11 +48,13 @@
 
 	    Crafty.background("#FFF");
 	    loadMap("assets/dungeon2.tsv",function(levelData) {
-        player = Crafty.e("2D, Canvas, PlayerControls, Camera, hero")
+        player = Crafty.e("2D, Canvas, PlayerControls, Camera, Slide, hero")
         .attr({x:32, y:250, z: 1});
 
-        //Crafty.viewport.follow(player, 1500, 1500);
-        camera = Crafty.e("Camera").camera(player);
+
+
+        //Crafty.viewport.follow(player, 500, 500);
+        camera = Crafty.e("Camera").camera(player, 1500, 1500);
         
       	});
 
