@@ -10,6 +10,7 @@
     <script type="text/javascript" src="src/com/Slide.js"></script>
     <script type="text/javascript" src="src/com/AI.js"></script>
     <script type="text/javascript" src="src/com/Camera.js"></script>
+    <script type="text/javascript" src="src/com/Solid.js"></script>
     <script type="text/javascript" src="src/com/PlayerControls.js"></script>
     <script>
 
@@ -44,25 +45,32 @@
   });
 }
 
+  function populateLevel(chance,level) {
+    console.log("populatoin called");
+    $.each(level,function(y,row) {
+      $.each(row,function(x,entry) {
+        if(entry != "") {
+          if((Math.random() < chance)) {
+            Crafty.e("2D, Canvas, goblin1, AI, Solid").attr({x:x*32, y:y*32, z:1}).moveChance(Math.random()*0.5);
+          }
+        }
+      });
+    });
+  }
+
 	  Crafty.scene("main",function() {
-
+      //in real life you would want to check were you position the placement of your hero
 	    Crafty.background("#FFF");
-	    loadMap("assets/dungeon2.tsv",function(levelData) {
-        player = Crafty.e("2D, Canvas, PlayerControls, Camera, Slide, hero")
-        .attr({x:32, y:250, z: 1});
+	    loadMap("assets/dungeon2.tsv",function(level) {
+        player = Crafty.e("2D, Canvas, PlayerControls, Camera, Slide, Solid, hero")
+        .attr({x:32, y:256, z: 0});
 
 
-
-        //Crafty.viewport.follow(player, 500, 500);
         camera = Crafty.e("Camera").camera(player);
+        populateLevel(0.05, level);
         
       	});
 
-	    // goblin = Crafty.e("2D, Canvas, goblin1")
-	    //      .attr({x:50, y:50});
-
-	  // slowGoblin = Crafty.e("2D, Canvas, goblin1, AI").attr({x:32, y:32}).moveChance(0.2);
-    	//fastGoblin = Crafty.e("2D, Canvas, goblin1, AI").attr({x:96, y:32}).moveChance(0.8);   
 	  });
 
 	  Crafty.scene("loading");

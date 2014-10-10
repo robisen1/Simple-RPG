@@ -49,9 +49,11 @@
 	    Crafty.background("#FFF");
 	    loadMap("assets/dungeon2.tsv",function(levelData) {
         player = Crafty.e("2D, Canvas, PlayerControls, Camera, Slide, hero")
-        .attr({x:32, y:250, z: 1});
+        .attr({x:32, y:256, z: 0});
 
-
+        player.addComponent("Collision").onHit("Wall",function(obj) {
+          this.cancelSlide();
+        });
 
         //Crafty.viewport.follow(player, 500, 500);
         camera = Crafty.e("Camera").camera(player);

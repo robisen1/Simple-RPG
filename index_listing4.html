@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="game"></div>
+    <script type="text/javascript" src="lib/crafty.js"></script>
+    <script>
+		var WIDTH = 500, HEIGHT = 320;
+		Crafty.init(WIDTH, HEIGHT);
+		Crafty.sprite(32,"assets/dungeon.png", {
+	     floor: [0,0], wall1: [2,1], stairs: [3,1]
+	  });
+	  	Crafty.sprite(32,"assets/characters.png", {
+	     hero: [11,4], goblin1: [8,14]
+	  });
+	  // create a simple object that describes player movement
+	  Crafty.c("PlayerControls", {
+	  	    init: function() {
+      			   //lets now make the hero move where ever we touch      
+				    Crafty.addEvent(this, Crafty.stage.elem, 'mousedown', function(e) {
+				    // lets simulate a 8 way controller or old school joystick
+				    if (e.clientX < player.x && (e.clientX - player.x)< 32) 
+				       {player.x =  player.x - 32;}
+				   	else if (e.clientX > player.x && (e.clientX - player.x) > 32){
+				   		player.x = player.x + 32;
+				   	}
+				   	else {player.x = player.x}
+
+				   	if (e.clientY < player.y && (e.clientY - player.y)< 32) 
+				       {player.y =  player.y - 32;}
+				   	else if (e.clientY > player.y && (e.clientY - player.y) > 32){
+				   		player.y = player.y + 32;
+				   	}
+				   	else {player.y = player.y}
+			
+					Crafty.trigger('Turn');
+					  	console.log('mousedown at (' + e.clientX + ', ' + e.clientY + ')');
+					});
+         }
+	  });
+
+	  Crafty.scene("loading", function() {
+	  	     Crafty.load(["assets/dungeon.png","assets/characters.png"], function() {
+	         Crafty.scene("main"); // Run the main scene
+	         console.log("Done loading");
+	     },
+	     function(e) { //progress
+	     },
+	     function(e) { //somethig is wrong, error loading
+	     	console.log("Error,failed to load", e)
+
+	    });
+	  });
+	  Crafty.scene("loading");
+	  // Let's draw us a Hero and a mean Goblin
+	  Crafty.scene("main",function() {
+	    Crafty.background("#FFF");
+	    player = Crafty.e("2D, Canvas,Fourway, PlayerControls, hero")
+	         .attr({x:0, y:0})
+	    goblin = Crafty.e("2D, Canvas, goblin1")
+	         .attr({x:64, y:64});
+	    
+	  });
+   </script>
+  </body>
+</html>

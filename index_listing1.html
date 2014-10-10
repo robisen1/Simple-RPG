@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div id="game"></div>
+    <script type="text/javascript" src="lib/crafty.js"></script>
+    <script>
+		// Height and Width
+		var WIDTH = 500, HEIGHT = 320;
+		// Initialize Crafty
+		Crafty.init(WIDTH, HEIGHT);
+
+
+		var player = Crafty.e(); 
+  		player.addComponent("2D, Canvas, Color")
+		player.color("red").attr({w:50, h:50});
+	    </script>
+  </body>
+</html>

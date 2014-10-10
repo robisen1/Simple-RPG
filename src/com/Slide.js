@@ -13,7 +13,6 @@ Crafty.c("Slide", {
         this._moving = true;
 
         // Let's keep our pre-movement location
-        // Hey, Maybe we'll need it later :)
         this._sourceX = this.x;
         this._sourceY = this.y;
 
@@ -44,12 +43,12 @@ Crafty.c("Slide", {
         this.trigger('Moved', {x: this.x, y: this.y});
       });
 
-    }, 
-    slideFrames: function(frames) { 
+    },
+    slideFrames: function(frames) {
        this._stepFrames = frames;
     },
 
-    // A function we'll use later to 
+    // A function we'll use later to
     // cancel our movement and send us back to where we started
     cancelSlide: function() {
       this.x = this._sourceX;
