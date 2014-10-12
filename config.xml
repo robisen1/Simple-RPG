@@ -2,17 +2,11 @@
 <widget xmlns   = "http://www.w3.org/ns/widgets"
       xmlns:gap   = "http://phonegap.com/ns/1.0"
       id          = "com.department13.rpg"
-      versionCode = "0.5"
       version     = "0.5" >
-
-  <!-- versionCode is optional and Android only -->
-
   <name>Simple RPG</name>
-
   <description>
       A very simple implementation of Crafty.js
   </description>
-
   <author href="http://www.department13.com" email="rsen@department13.com">
       Robi Sen
   </author>
