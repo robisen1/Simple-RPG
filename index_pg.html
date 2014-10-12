@@ -2,7 +2,7 @@
 <html>
   <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0,
-   maximum-scale=1.0, user-scalable=0" />
+   maximum-scale=1.0, target-densitydpi=high-dpi, user-scalable=0" />
   </head>
   <body>
     <div id="game"></div>
@@ -31,8 +31,9 @@
         .onHit("Enemy",function(hit) {
                this.cancelSlide();
                hit[0].obj.destroy();
-                 monstersKilled = monstersKilled +1;
-               console.log("how many monsters have I killed?" + " Ive killed " + monstersKilled);
+               console.log("kill")
+               monstersKilled = monstersKilled +1;
+               console.log("how many monsters have I killed?" + " Ive killed " + monstersKilled)
              });
         camera = Crafty.e("Camera").camera(player);
         populateLevel(0.05, level);
