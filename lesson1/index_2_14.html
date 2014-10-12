@@ -18,7 +18,6 @@
     Crafty.background('green');
     lastclientX = 0;
     lastclientY = 0;
-    monstersKilled = 0;
 
 	  Crafty.scene("main",function() {
       Crafty.background("#FFF");
@@ -29,8 +28,6 @@
                this.cancelSlide();
                hit[0].obj.destroy();
                console.log("kill")
-               monstersKilled = monstersKilled +1;
-               console.log("how many monsters have I killed?" + " Ive killed " + monstersKilled)
              });
         camera = Crafty.e("Camera").camera(player);
         populateLevel(0.05, level);

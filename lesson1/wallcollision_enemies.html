@@ -13,10 +13,7 @@
     <script type="text/javascript" src="src/com/Solid.js"></script>
     <script type="text/javascript" src="src/com/PlayerControls.js"></script>
     <script>
-
-	// Initialize Crafty
-	Crafty.init(500, 320);
-	// Background
+    Crafty.init(500, 320);
     Crafty.background('green');
 
     lastclientX = 0;
@@ -25,28 +22,22 @@
     function loadMap(file, callback) {
   	$.get(file,function(data) {
     	var level = [];
-    // Split out each row
-    	$.each(data.split("\n"),function(y,row) { 
+    	$.each(data.split("\n"),function(y,row) {
       		var columns = row.split("\t");
       level.push(columns);
-      // Then split out each column
       $.each(columns,function(x,column) {
         if(column) {
-          Crafty.e("2D, Canvas, floor, Floor").attr({x:x * 32, y: y * 32});            
+          Crafty.e("2D, Canvas, floor, Floor").attr({x:x * 32, y: y * 32});
         } else {
-          Crafty.e("2D, Canvas, wall1, Wall").attr({x:x * 32, y: y * 32});            
+          Crafty.e("2D, Canvas, wall1, Wall").attr({x:x * 32, y: y * 32});
         }
       });
-
     });
-
-    // Phone back home when we're done
     callback(level);
   });
 }
 
   function populateLevel(chance,level) {
-    console.log("populatoin called");
     $.each(level,function(y,row) {
       $.each(row,function(x,entry) {
         if(entry != "") {
@@ -64,19 +55,11 @@
 	    loadMap("assets/dungeon2.tsv",function(level) {
         player = Crafty.e("2D, Canvas, PlayerControls, Camera, Slide, Solid, hero")
         .attr({x:32, y:256, z: 0});
-
-
         camera = Crafty.e("Camera").camera(player);
         populateLevel(0.05, level);
-        
-      	});
-
+    	});
 	  });
-
 	  Crafty.scene("loading");
-
-
    </script>
   </body>
-
 </html>

@@ -7,23 +7,20 @@
     <script type="text/javascript" src="src/com/loading.js"></script>
     <script type="text/javascript" src="src/com/sprites.js"></script>
     <script type="text/javascript" src="src/com/Slide.js"></script>
+    <script type="text/javascript" src="src/com/AI.js"></script>
     <script type="text/javascript" src="src/com/PlayerControls.js"></script>
-
     <script>
-		// Initialize Crafty
-	Crafty.init(500, 320);
-		// Background
+	  Crafty.init(500, 320);
     Crafty.background('green');
 
 	  Crafty.scene("main",function() {
 
-	    Crafty.background("#FFF");
-	    player = Crafty.e("2D, Canvas,PlayerControls, Slide, hero")
+	   Crafty.background("#FFF");
+	   player = Crafty.e("2D, Canvas,PlayerControls, Slide, hero")
 	         .attr({x:0, y:0})
 
-	    goblin = Crafty.e("2D, Canvas, goblin1")
+	   goblin = Crafty.e("2D, Canvas, AI, Slide, goblin1")
 	         .attr({x:50, y:50});
-
 	  });
 	  Crafty.scene("loading");
    </script>

@@ -10,12 +10,10 @@
     <script type="text/javascript" src="src/com/Slide.js"></script>
     <script type="text/javascript" src="src/com/AI.js"></script>
     <script type="text/javascript" src="src/com/Camera.js"></script>
+    <script type="text/javascript" src="src/com/Solid.js"></script>
     <script type="text/javascript" src="src/com/PlayerControls.js"></script>
     <script>
-
-	// Initialize Crafty
-	Crafty.init(500, 320);
-	// Background
+    Crafty.init(500, 320);
     Crafty.background('green');
 
     lastclientX = 0;
@@ -24,53 +22,44 @@
     function loadMap(file, callback) {
   	$.get(file,function(data) {
     	var level = [];
-    // Split out each row
-    	$.each(data.split("\n"),function(y,row) { 
+    	$.each(data.split("\n"),function(y,row) {
       		var columns = row.split("\t");
       level.push(columns);
-      // Then split out each column
       $.each(columns,function(x,column) {
         if(column) {
-          Crafty.e("2D, Canvas, floor, Floor").attr({x:x * 32, y: y * 32});            
+          Crafty.e("2D, Canvas, floor, Floor").attr({x:x * 32, y: y * 32});
         } else {
-          Crafty.e("2D, Canvas, wall1, Wall").attr({x:x * 32, y: y * 32});            
+          Crafty.e("2D, Canvas, wall1, Wall").attr({x:x * 32, y: y * 32});
         }
       });
-
     });
-
-    // Phone back home when we're done
     callback(level);
   });
 }
 
+  function populateLevel(chance,level) {
+    $.each(level,function(y,row) {
+      $.each(row,function(x,entry) {
+        if(entry != "") {
+          if((Math.random() < chance)) {
+            Crafty.e("2D, Canvas, goblin1, AI, Solid").attr({x:x*32, y:y*32, z:1}).moveChance(Math.random()*0.5);
+          }
+        }
+      });
+    });
+  }
+
 	  Crafty.scene("main",function() {
-
+      //in real life you would want to check were you position the placement of your hero
 	    Crafty.background("#FFF");
-	    loadMap("assets/dungeon2.tsv",function(levelData) {
-        player = Crafty.e("2D, Canvas, PlayerControls, Camera, Slide, hero")
+	    loadMap("assets/dungeon2.tsv",function(level) {
+        player = Crafty.e("2D, Canvas, PlayerControls, Camera, Slide, Solid, hero")
         .attr({x:32, y:256, z: 0});
-
-        player.addComponent("Collision").onHit("Wall",function(obj) {
-          this.cancelSlide();
-        });
-
-        //Crafty.viewport.follow(player, 500, 500);
         camera = Crafty.e("Camera").camera(player);
-        
-      	});
-
-	    // goblin = Crafty.e("2D, Canvas, goblin1")
-	    //      .attr({x:50, y:50});
-
-	  // slowGoblin = Crafty.e("2D, Canvas, goblin1, AI").attr({x:32, y:32}).moveChance(0.2);
-    	//fastGoblin = Crafty.e("2D, Canvas, goblin1, AI").attr({x:96, y:32}).moveChance(0.8);   
+        populateLevel(0.05, level);
+    	});
 	  });
-
 	  Crafty.scene("loading");
-
-
    </script>
   </body>
-
 </html>
